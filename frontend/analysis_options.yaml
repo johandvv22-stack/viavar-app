@@ -1,0 +1,9 @@
+# Crear archivo analysis_options.yaml en raíz del proyecto
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.gr.dart"
+  language:
+    strict-raw-types: false
+    strict-casts: false

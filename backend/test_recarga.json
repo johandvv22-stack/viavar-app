@@ -1,0 +1,13 @@
+﻿{
+    "maquina_codigo": "MAQ001",
+    "batch_id": "test_recarga_001",
+    "lecturas": [
+        {"posicion": "A11", "cantidad": 20},
+        {"posicion": "A12", "cantidad": 18}
+    ],
+    "estado_esp": {
+        "memoria_ocupada": 1024,
+        "firmware": "v1.0",
+        "batches_pendientes": 0
+    }
+}

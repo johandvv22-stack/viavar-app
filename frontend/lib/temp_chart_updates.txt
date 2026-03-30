@@ -1,0 +1,67 @@
+﻿// === AGREGAR DESPUÉS DE LAS VARIABLES EXISTENTES ===
+  // Variables para datos de gráficas
+  List<VentasPorDia> _ventasPorDia = [];
+  List<VentasPorMaquina> _ventasPorMaquina = [];
+  List<ProductosPorCategoria> _productosPorCategoria = [];
+  bool _loadingCharts = false;
+
+// === AGREGAR DESPUÉS DEL MÉTODO _loadExampleData() ===
+  Future<void> _loadChartData() async {
+    if (!_usingRealData) return; // Solo cargar gráficas si estamos usando datos reales
+    
+    setState(() {
+      _loadingCharts = true;
+    });
+
+    try {
+      // Cargar datos para las 3 gráficas en paralelo
+      final results = await Future.wait([
+        _dashboardService.getVentasPorDia(
+          startDate: _startDate,
+          endDate: _endDate,
+        ),
+        _dashboardService.getVentasPorMaquina(
+          startDate: _startDate,
+          endDate: _endDate,
+        ),
+        _dashboardService.getProductosPorCategoria(),
+      ]);
+
+      setState(() {
+        _ventasPorDia = results[0] as List<VentasPorDia>;
+        _ventasPorMaquina = results[1] as List<VentasPorMaquina>;
+        _productosPorCategoria = results[2] as List<ProductosPorCategoria>;
+        _loadingCharts = false;
+      });
+      
+      print(' Datos de gráficas cargados:');
+      print('   - Ventas por día: ${_ventasPorDia.length} registros');
+      print('   - Ventas por máquina: ${_ventasPorMaquina.length} máquinas');
+      print('   - Productos por categoría: ${_productosPorCategoria.length} categorías');
+      
+    } catch (e) {
+      print(' Error cargando datos de gráficas: $e');
+      setState(() {
+        _loadingCharts = false;
+        // Usar datos de ejemplo si hay error
+        _ventasPorDia = [];
+        _ventasPorMaquina = [];
+        _productosPorCategoria = [];
+      });
+    }
+  }
+
+  // Llamar este método cuando cambien las fechas o se carguen datos reales
+  void _refreshChartData() {
+    if (_usingRealData) {
+      _loadChartData();
+    }
+  }
+
+// === MODIFICAR EL MÉTODO _loadRealData() PARA LLAMAR A _loadChartData() ===
+// Buscar el método _loadRealData y agregar al final:
+//   _loadChartData();
+
+// === MODIFICAR EL MÉTODO _onDateRangeChanged() PARA ACTUALIZAR GRÁFICAS ===
+// Buscar el método _onDateRangeChanged y agregar al final:
+//   _refreshChartData();

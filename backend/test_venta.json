@@ -1,0 +1,9 @@
+﻿{
+    "maquina_codigo": "MAQ001",
+    "batch_id": "venta_test",
+    "lecturas": [
+        {"posicion": "A11", "cantidad": 8},
+        {"posicion": "A12", "cantidad": 12}
+    ],
+    "estado_esp": {"memoria_ocupada": 1024}
+}
